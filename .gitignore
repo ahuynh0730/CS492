@@ -52,3 +52,5 @@ project_1/ios/Runner/Runner-Bridging-Header.h
 project_1/pubspec.lock
 project_1/pubspec.yaml
 project_1/test/widget_test.dart
+project_2/CHANGELOG.md
+project_2/analysis_options.yaml
