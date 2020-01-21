@@ -4,7 +4,7 @@ void main(List<String> arguments) {
   SpaceAdventure(
     planetarySystem: PlanetarySystem(
       name: 'Solar System',
-      planets: mockPlanets()
+      planets: []
     )
   ).start(); 
 }
