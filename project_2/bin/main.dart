@@ -17,7 +17,7 @@ List<Planet> mockPlanets(){
     ),
     Planet(
       name: 'Venus',
-      description: 'It\'s very ccloudy here!'
+      description: 'It\'s very cloudy here!'
     )
   ];
 }
