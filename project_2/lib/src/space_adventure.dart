@@ -23,8 +23,7 @@ class SpaceAdventure{
 
   void printGreeting(){
     print('Welcome to the ${planetarySystem.name}!');
-    print('Welcome to the Solar System!');
-    print('There are 8 planets to explore.');
+    print('There are ${planetarySystem.NumberOfPlanets} planets to explore.');
   } 
 
 
