@@ -1,4 +1,6 @@
 import 'package:project_2/project_2.dart';
+import 'dart:io';
+import 'dart:convert';
 
 const systemName = 'Solar System';
 const planetData = {
@@ -13,17 +15,37 @@ const planetData = {
   'Pluto': 'I don\'t care what they say - it\'s a planet.'
 };
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async{
+  
+  //waits for file content
+  var fileContent = await readFromFile(arguments[0]);
+  
+
+  
+
+  /*
   SpaceAdventure(
     planetarySystem: PlanetarySystem(
       name: systemName,
       planets: mockPlanets()
     )
-  ).start(); 
+  ).start();*/ 
 }
 
 List<Planet> mockPlanets(){
   return planetData.entries.map( 
     (e) => Planet(name:e.key, description: e.value)
   ).toList();
+}
+
+Future<String> readFromFile(String fileName) async{
+  var file = File(fileName);
+  String fileContents;
+
+  //makes sure file exists before reading content into fileContents as a String
+  if (await file.exists()){
+    fileContents = await file.readAsString();
+  }
+
+  return fileContents;
 }
