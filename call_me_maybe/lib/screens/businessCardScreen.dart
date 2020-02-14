@@ -11,30 +11,33 @@ class BusinessCardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
      children: <Widget>[
-        Text('Anthony Huynh'),
-        Text('Software Engineer'),
-        RaisedButton(
-          onPressed: _sendSMS,
-          child: Text(phoneNumber),
-        ),
-        Stack(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: FlatButton(
-                onPressed: _openLink,
-                child: Text(link),
-              ),
+      Expanded(
+          child: Image.asset('assets/pictures/myPhoto.jpg')
+      ),
+      Text('Anthony Huynh'),
+      Text('Software Engineer'),
+      RaisedButton(
+        onPressed: _sendSMS,
+        child: Text(phoneNumber),
+      ),
+      Stack(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: FlatButton(
+              onPressed: _openLink,
+              child: Text(link),
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: FlatButton(
-                onPressed: _sendEmail,
-                child: Text(email),
-              ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: FlatButton(
+              onPressed: _sendEmail,
+              child: Text(email),
             ),
-          ]
-        ),
+          ),
+        ]
+      ),
      ]
     );
   }
