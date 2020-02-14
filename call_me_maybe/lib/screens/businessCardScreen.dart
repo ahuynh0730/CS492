@@ -30,8 +30,15 @@ class BusinessCardScreen extends StatelessWidget {
      ]
     );
   }
+
+  _sendSMS() async {
+    final numberWithoutDashes = phoneNumber.replaceAll('-', '');
+    final launchString = 'sms:' + numberWithoutDashes;
+    if (await canLaunch(launchString)) {
+      await launch(launchString);
+    } else {
+      throw 'Could not launch $launchString';
+    }
+  }
 }
 
-_sendSMS() async {
-   
-}
