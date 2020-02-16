@@ -21,7 +21,7 @@ class _PredictorScreenState extends State<PredictorScreen> {
         Padding(
           padding: EdgeInsets.all(20),
           child: GestureDetector(
-            onTap: () { setState ( () {predictorText = getPredictionString(random.nextInt(10));}); },
+            onTap: () { setState ( () {predictorText = getPredictionString(random.nextInt(8));}); },
             child: Text('Ask a question, tap for the answer', style: TextStyle(fontSize: 20),),
           ),
         ),
@@ -41,19 +41,13 @@ class _PredictorScreenState extends State<PredictorScreen> {
       case 3:
         return 'Cannot predict now.';
       case 4:
-        return 'Concentrate and ask again.';
-      case 5:
         return 'Don\'t count on it.';
-      case 6:
+      case 5:
         return 'It is certain.';
-      case 7:
+      case 6:
         return 'It is decidedly so.';
-      case 8:
-        return 'Most likely.';
-      case 9:
-        return 'My reply is no.';
       default:
-        return 'Absolutely not.';
+        return 'Most likely.';
 
     }
   }
