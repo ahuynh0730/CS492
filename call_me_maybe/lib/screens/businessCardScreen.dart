@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class BusinessCardScreen extends StatelessWidget {
 
+  final name = 'Anthony Huynh';
   final phoneNumber = '314-707-6765';
   final link = 'github.com/ahuynh0730';
   final email = 'ahuynh0730@gmail.com';
@@ -16,8 +17,8 @@ class BusinessCardScreen extends StatelessWidget {
           Expanded(
             child: Image.asset('assets/pictures/myPhoto.jpg')
           ),
-          Text('Anthony Huynh'),
-          Text('Software Engineer'),
+          Text(name, style: TextStyle(fontFamily: 'KaushanScript', color: Colors.white)),
+          Text('Software Engineer', style: TextStyle(fontFamily: 'KaushanScript', color: Colors.white)),
           RaisedButton(
             onPressed: _sendSMS,
             child: Text(phoneNumber),
