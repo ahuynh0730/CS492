@@ -1,6 +1,9 @@
 import 'dart:math';
+import '../models/magic8ball.dart';
 
+import 'package:call_me_maybe/models/magic8ball.dart';
 import 'package:flutter/material.dart';
+
 
 class PredictorScreen extends StatefulWidget {
   @override
@@ -10,7 +13,7 @@ class PredictorScreen extends StatefulWidget {
 class _PredictorScreenState extends State<PredictorScreen> {
 
   String predictorText ='Prediction';
-  Random random = Random();
+  final magic8Ball = Magic8Ball();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class _PredictorScreenState extends State<PredictorScreen> {
         Padding(
           padding: EdgeInsets.all(20),
           child: GestureDetector(
-            onTap: () { setState ( () {predictorText = getPredictionString(random.nextInt(8));}); },
+            onTap: () { setState ( () {predictorText = magic8Ball.shake();}); },
             child: Text('Ask a question, tap for the answer', style: TextStyle(fontSize: 20),),
           ),
         ),
@@ -30,25 +33,5 @@ class _PredictorScreenState extends State<PredictorScreen> {
     );
   }
 
-  String getPredictionString(int randomNumber){
-    switch (randomNumber){
-      case 0: 
-        return 'As I see it, yes.';
-      case 1:
-        return 'Ask again later.';
-      case 2:
-        return 'Better not tell you now.';
-      case 3:
-        return 'Cannot predict now.';
-      case 4:
-        return 'Don\'t count on it.';
-      case 5:
-        return 'It is certain.';
-      case 6:
-        return 'It is decidedly so.';
-      default:
-        return 'Most likely.';
-
-    }
-  }
+  
 }
