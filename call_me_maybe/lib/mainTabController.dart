@@ -7,9 +7,9 @@ import 'screens/predictorScreen.dart';
 class MainTabController extends StatelessWidget {
 
   static const tabs = [
-    Tab(text: 'Business Card'),
-    Tab(text: 'Resume',),
-    Tab(text: 'Predictor')
+    Icon(Icons.home),
+    Icon(Icons.work),
+    Icon(Icons.thumbs_up_down)
   ];
 
   final screens = [BusinessCardScreen(), ResumeScreen(), PredictorScreen()];
