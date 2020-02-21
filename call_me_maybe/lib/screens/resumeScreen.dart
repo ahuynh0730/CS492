@@ -87,9 +87,9 @@ class ResumeHeader extends StatelessWidget {
       alignment: Alignment.center,
       child: Column(
         children: <Widget> [
-          Text(name, style: TextStyle(fontSize: 30),),
-          Text(email, style: TextStyle(fontSize: 20),),
-          Text(link, style: TextStyle(fontSize: 20),)
+          Text(name, style: TextStyle(fontSize: 25, fontFamily: 'GreatVibes'),),
+          Text(email, style: TextStyle(fontSize: 20, fontFamily: 'GreatVibes'),),
+          Text(link, style: TextStyle(fontSize: 20, fontFamily: 'GreatVibes'),)
         ],
       )
     );

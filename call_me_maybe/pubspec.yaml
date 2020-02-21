@@ -54,6 +54,9 @@ flutter:
     - family: KaushanScript
       fonts:
       - asset: assets/fonts/KaushanScript-Regular.ttf
+    - family: GreatVibes
+      fonts:
+      - asset: assets/fonts/GreatVibes-Regular.ttf
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
