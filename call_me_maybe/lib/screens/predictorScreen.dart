@@ -1,4 +1,3 @@
-import 'dart:math';
 import '../models/magic8ball.dart';
 
 import 'package:call_me_maybe/models/magic8ball.dart';
