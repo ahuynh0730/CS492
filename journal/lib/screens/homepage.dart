@@ -11,6 +11,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool darkMode = false;
 
   void _incrementCounter() {
     setState(() {
@@ -18,16 +20,25 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  switchDarkMode(bool newVal){
+    setState(() {
+      darkMode = newVal;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Center(child: Text(widget.title)),
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.settings
+              Icons.settings,
+              color: Colors.white,
             ),
+            onPressed: () => _scaffoldKey.currentState.openEndDrawer()
           ),
         ],
       ),
@@ -35,12 +46,30 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Icon(
+              Icons.book
             ),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              'Journal',
+            ),
+          ],
+        ),
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Settings'),
+            ),
+            ListTile(
+              title: Text('Dark Mode'),
+              trailing: Switch(
+                value: darkMode, 
+                onChanged: (newVal) {
+                  switchDarkMode(newVal);
+                }
+              ),
             ),
           ],
         ),
@@ -49,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
