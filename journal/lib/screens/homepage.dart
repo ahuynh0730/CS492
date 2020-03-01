@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -20,10 +21,9 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  switchDarkMode(bool newVal){
-    setState(() {
-      darkMode = newVal;
-    });
+  void changeBrightness() {
+    DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark? Brightness.light: Brightness.dark);
+    darkMode = !darkMode;
   }
 
   @override
@@ -66,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Dark Mode'),
               trailing: Switch(
                 value: darkMode, 
-                onChanged: (newVal) {
-                  switchDarkMode(newVal);
+                onChanged: (darkMode) {
+                  changeBrightness();
                 }
               ),
             ),
