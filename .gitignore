@@ -78,3 +78,7 @@ call_me_maybe/android/gradle/wrapper/gradle-wrapper.properties
 *.h
 call_me_maybe/test/widget_test.dart
 call_me_maybe/HUYNH_ANTHONY.zip
+journal/.metadata
+*.kt
+*.properties
+journal/test/widget_test.dart
