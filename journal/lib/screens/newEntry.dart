@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:journal/myAppBar.dart';
-import 'package:journal/settingsDrawer.dart';
+import '../widgets/myAppBar.dart';
+import '../widgets/settingsDrawer.dart';
+import '../widgets/customTextFormField.dart';
 
 class NewEntryPage extends StatefulWidget {
 
@@ -28,41 +29,28 @@ class _NewEntryPageState extends State<NewEntryPage> {
             key: formKey,
             child: ListView(
               children: [
-                Padding(padding: const EdgeInsets.all(10)),
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'Title', border: OutlineInputBorder()
-                  ),
-                ),
-                Padding(padding: const EdgeInsets.all(10)),
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'Body', border: OutlineInputBorder()
-                  ),
-                ),
-                Padding(padding: const EdgeInsets.all(10)),
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'Rating', border: OutlineInputBorder()
-                  ),
-                ),
+                CustomTextFormField(labelName: 'Title'),
+                CustomTextFormField(labelName: 'Body'),
+                CustomTextFormField(labelName: 'Rating'),
                 Padding(padding: const EdgeInsets.all(10)),
                 Stack(
                   children: <Widget>[
                     Align(
                       alignment: Alignment.centerLeft,
                       child: RaisedButton(
-                        onPressed: (){},
+                        onPressed: (){Navigator.of(context).pop();},
                         child: Text('Cancel'),
                       ),
                     ),
                     Align(
                       alignment: Alignment.centerRight,
                       child: RaisedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          if (formKey.currentState.validate()){
+                            formKey.currentState.save();
+                            Navigator.of(context).pop();
+                          }
+                        },
                         child: Text('Save'),
                       ),
                     ),
