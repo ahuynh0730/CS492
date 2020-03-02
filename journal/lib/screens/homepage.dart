@@ -13,7 +13,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  bool darkMode = false;
 
   void _incrementCounter() {
     setState(() {
@@ -23,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void changeBrightness() {
     DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark? Brightness.light: Brightness.dark);
-    darkMode = !darkMode;
   }
 
   @override
@@ -64,11 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: Text('Dark Mode'),
-              trailing: Switch(
-                value: darkMode, 
-                onChanged: (darkMode) {
-                  changeBrightness();
-                }
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.lightbulb_outline,
+                ), 
+                onPressed: changeBrightness
               ),
             ),
           ],
