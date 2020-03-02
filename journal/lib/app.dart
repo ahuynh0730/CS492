@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:journal/screens/newEntry.dart';
 import 'screens/homepage.dart';
 
 
