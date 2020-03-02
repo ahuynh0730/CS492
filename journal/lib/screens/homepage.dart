@@ -25,7 +25,18 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: MyAppBar(title: widget.title, scaffoldKey: _scaffoldKey,),
+      appBar: AppBar(
+        title: Center(child: Text(widget.title)),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () => _scaffoldKey.currentState.openEndDrawer()
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
