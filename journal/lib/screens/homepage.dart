@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journal/screens/newEntry.dart';
-import '../myAppBar.dart';
-import '../settingsDrawer.dart';
+import '../Widgets/myAppBar.dart';
+import '../Widgets/settingsDrawer.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
