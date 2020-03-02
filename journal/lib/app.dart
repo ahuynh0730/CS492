@@ -6,6 +6,11 @@ import 'screens/homepage.dart';
 
 class MyApp extends StatelessWidget {
 
+  static final routes = {
+    MyHomePage.routeName: (context) => MyHomePage(),
+    NewEntryPage.routeName: (context) => NewEntryPage(),
+  };
+
   @override
   Widget build(BuildContext context) {
     return new DynamicTheme(
@@ -18,7 +23,7 @@ class MyApp extends StatelessWidget {
         return new MaterialApp(
           title: 'Journal',
           theme: theme,
-          home: new MyHomePage(title: 'Journal'),
+          routes: routes,
         );
       }
     );
