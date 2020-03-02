@@ -5,6 +5,7 @@ import 'package:journal/settingsDrawer.dart';
 class NewEntryPage extends StatefulWidget {
 
   final String title = "New Journal Entry";
+  static const routeName = 'newEntry';
 
   @override
   _NewEntryPageState createState() => _NewEntryPageState();
@@ -19,18 +20,7 @@ class _NewEntryPageState extends State<NewEntryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Center(child: Text(widget.title)),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () => _scaffoldKey.currentState.openEndDrawer()
-          ),
-        ],
-      ),
+      appBar: MyAppBar(title: widget.title, scaffoldKey: _scaffoldKey),
       endDrawer: SettingsDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(10),

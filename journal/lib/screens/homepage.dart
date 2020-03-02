@@ -1,42 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:journal/screens/newEntry.dart';
 import '../myAppBar.dart';
 import '../settingsDrawer.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key}) : super(key: key);
 
-  final String title;
+  final String title = 'Journal';
+  static const routeName = '/';
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void pushEntryScreen(BuildContext context){
+    Navigator.of(context).pushNamed(NewEntryPage.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Center(child: Text(widget.title)),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () => _scaffoldKey.currentState.openEndDrawer()
-          ),
-        ],
-      ),
+      appBar: MyAppBar(title: widget.title, scaffoldKey: _scaffoldKey),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,8 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       endDrawer: SettingsDrawer(),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: (){pushEntryScreen(context);},
         child: Icon(Icons.add),
       ),
     );
