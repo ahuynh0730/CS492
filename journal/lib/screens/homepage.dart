@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
+import '../myAppBar.dart';
+import '../settingsDrawer.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -20,26 +21,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void changeBrightness() {
-    DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark? Brightness.light: Brightness.dark);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Center(child: Text(widget.title)),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () => _scaffoldKey.currentState.openEndDrawer()
-          ),
-        ],
-      ),
+      appBar: MyAppBar(title: widget.title, scaffoldKey: _scaffoldKey,),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,25 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Settings'),
-            ),
-            ListTile(
-              title: Text('Dark Mode'),
-              trailing: IconButton(
-                icon: Icon(
-                  Icons.lightbulb_outline,
-                ), 
-                onPressed: changeBrightness
-              ),
-            ),
-          ],
-        ),
-      ),
+      endDrawer: SettingsDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
