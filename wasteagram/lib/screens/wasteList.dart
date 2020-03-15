@@ -28,7 +28,7 @@ class _WasteListState extends State<WasteList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collection('posts').snapshots(),
+      stream: Firestore.instance.collection('posts').orderBy('date', descending: true).snapshots(),
       builder: (context, snapshot) {
         calculateWaste(snapshot);
         return Scaffold(
