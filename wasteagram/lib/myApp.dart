@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/wasteList.dart';
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: WasteList(title: 'Wasteagram'),
+      home: WasteList(),
     );
   }
 }

@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wasteagram/widgets/scaffoldBody.dart';
+import 'photoSelection.dart';
 
 
 class WasteList extends StatefulWidget {
-  WasteList({Key key, this.title}) : super(key: key);
+  WasteList({Key key}) : super(key: key);
 
-  final String title;
-
+  final String title = 'Wasteagram';
 
   @override
   _WasteListState createState() => _WasteListState();
@@ -17,7 +17,7 @@ class _WasteListState extends State<WasteList> {
 
   int wasteCount = 0;
 
-  void calculateWaste(AsyncSnapshot<dynamic> snapshot){
+  void calculateWaste(AsyncSnapshot<dynamic> snapshot) async {
     wasteCount = 0;
     for (int i = 0; i< snapshot.data.documents.length; i++){
       wasteCount += snapshot.data.documents[i]['wasteAmount'];
@@ -38,7 +38,9 @@ class _WasteListState extends State<WasteList> {
           ),
           body: scaffoldBody(snapshot),
           floatingActionButton: FloatingActionButton(
-            onPressed: null,
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoSelection()));
+            },
             tooltip: 'Increment',
             child: Icon(Icons.add),
           ),
