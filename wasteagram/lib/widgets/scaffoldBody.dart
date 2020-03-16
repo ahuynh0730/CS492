@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/wasteDetail.dart';
 
   String getWeekday(day){
     switch (day) {
@@ -78,7 +79,7 @@ import 'package:flutter/material.dart';
   }
 
 
-Widget scaffoldBody(AsyncSnapshot<dynamic> snapshot){
+Widget scaffoldBody(BuildContext context, AsyncSnapshot<dynamic> snapshot){
   if(snapshot.hasData && snapshot.data.documents != null && snapshot.data.documents.length > 0){
     return ListView.builder(
       itemCount: snapshot.data.documents.length,
@@ -86,7 +87,10 @@ Widget scaffoldBody(AsyncSnapshot<dynamic> snapshot){
         var post = snapshot.data.documents[index];
         return ListTile(
           title: Text(getTitle(post['date'].toDate())),
-          trailing: Text(post['wasteAmount'].toString())
+          trailing: Text(post['wasteAmount'].toString()),
+          onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>WasteDetail(snapshot: post)));
+            },
         );
       }
     );

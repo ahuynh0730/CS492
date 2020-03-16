@@ -23,7 +23,7 @@ class _PhotoSelectionState extends State<PhotoSelection> {
 
   final formKey = GlobalKey<FormState>();
   File image;
-  final foodWastePoste = FoodWastePoste();
+  final foodWastePost = FoodWastePost();
   LocationData locationData;
 
   void getImage() async {
@@ -35,24 +35,28 @@ class _PhotoSelectionState extends State<PhotoSelection> {
     StorageReference storageReference = FirebaseStorage.instance.ref().child(Path.basename(image.path));
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
-    foodWastePoste.imageURL = await storageReference.getDownloadURL();
+    foodWastePost.imageURL = await storageReference.getDownloadURL();
   }
 
   void retrieveLocation() async {
     var locationService = Location();
     locationData = await locationService.getLocation();
-    foodWastePoste.latitude = locationData.latitude;
-    foodWastePoste.longitude = locationData.longitude;
+    foodWastePost.latitude = locationData.latitude;
+    foodWastePost.longitude = locationData.longitude;
   }
 
   Widget photoSelectionScaffoldBody(File image){
     if (image == null) {
       return Center(
-        child: RaisedButton(
-          child: Text('Select Photo'),
-          onPressed: (){
-            getImage();
-          },
+        child: Tooltip(
+          message: 'Take a picture',
+          child: RaisedButton(
+            child: Text('Take a Photo'),
+            onPressed: (){
+              getImage();
+            },
+          ),
+          
         ),
       );
     } else {
@@ -66,60 +70,66 @@ class _PhotoSelectionState extends State<PhotoSelection> {
             Padding(padding: const EdgeInsets.all(10)),
             Text('Number of Items'),
             Padding(padding: const EdgeInsets.all(10)),
-            Form(
-              key: formKey,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+            Tooltip(
+              message: 'Number of items that were wasted',
+              child:Form(
+                key: formKey,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
+                  validator: (value) {
+                    if (value.isEmpty){
+                      return 'Field cannot be empty';
+                    } else return null;
+                  },
+                  onSaved: (value) {
+                    foodWastePost.quantity = int.parse(value);
+                  },
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
-                validator: (value) {
-                  if (value.isEmpty){
-                    return 'Field cannot be empty';
-                  } else return null;
-                },
-                onSaved: (value) {
-                  foodWastePoste.quantity = int.parse(value);
-                },
               ),
             ),
             Padding(padding: const EdgeInsets.all(10)),
-            Stack(
-              children: <Widget>[
-                Container(
-                  color: Colors.red,
-                  width: MediaQuery.of(context).size.width,
-                  height: .20 * MediaQuery.of(context).size.height,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: RaisedButton(
-                    child: Icon(
-                      Icons.cloud_upload,
-                      size: .2 * MediaQuery.of(context).size.height,
-                      color: Colors.black,
-                    ),
-                    onPressed: () async {
-                      if (formKey.currentState.validate()){
-                        formKey.currentState.save();
-                        await uploadImage();
-                        await retrieveLocation();
-                        foodWastePoste.addDateToPost();
-                        Firestore.instance.collection('posts').add({
-                          'wasteAmount': foodWastePoste.quantity,
-                          'date': foodWastePoste.date,
-                          'imageURL': foodWastePoste.imageURL,
-                          'latitude': foodWastePoste.latitude,
-                          'longitude': foodWastePoste.longitude
-                        });
-                        Navigator.of(context).pop();
-                      }
-                    },
-                  )
-                ),
-              ]
-            )
+            Tooltip(
+              message: 'Upload to database',
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    color: Colors.red,
+                    width: MediaQuery.of(context).size.width,
+                    height: .20 * MediaQuery.of(context).size.height,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: RaisedButton(
+                      child: Icon(
+                        Icons.cloud_upload,
+                        size: .2 * MediaQuery.of(context).size.height,
+                        color: Colors.black,
+                      ),
+                      onPressed: () async {
+                        if (formKey.currentState.validate()){
+                          formKey.currentState.save();
+                          await uploadImage();
+                          await retrieveLocation();
+                          foodWastePost.addDateToPost();
+                          Firestore.instance.collection('posts').add({
+                            'wasteAmount': foodWastePost.quantity,
+                            'date': foodWastePost.date,
+                            'imageURL': foodWastePost.imageURL,
+                            'latitude': foodWastePost.latitude,
+                            'longitude': foodWastePost.longitude
+                          });
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    )
+                  ),
+                ]
+              )
+            ),
           ]
         )
       );

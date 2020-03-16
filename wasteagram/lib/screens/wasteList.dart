@@ -36,12 +36,12 @@ class _WasteListState extends State<WasteList> {
             centerTitle: true,
             title: Text(widget.title + ' - ' + '$wasteCount'),
           ),
-          body: scaffoldBody(snapshot),
+          body: scaffoldBody(context, snapshot),
           floatingActionButton: FloatingActionButton(
             onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoSelection()));
             },
-            tooltip: 'Increment',
+            tooltip: 'Add new post',
             child: Icon(Icons.add),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, 

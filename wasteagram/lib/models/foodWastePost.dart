@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-class FoodWastePoste{
+class FoodWastePost{
   DateTime date;
   String imageURL;
   int quantity;
