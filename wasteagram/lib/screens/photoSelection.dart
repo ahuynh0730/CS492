@@ -1,12 +1,18 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as Path;
+import '../models/foodWastePost.dart';
+
 
 class PhotoSelection extends StatefulWidget {
   PhotoSelection({Key key}) : super(key: key);
 
   final String title = 'Wasteagram';
-  static const routeName = 'photoSelection';
+  
 
   @override
   _PhotoSelectionState createState() => _PhotoSelectionState();
@@ -16,10 +22,18 @@ class _PhotoSelectionState extends State<PhotoSelection> {
 
   final formKey = GlobalKey<FormState>();
   File image;
+  final foodWastePoste = FoodWastePoste();
 
   void getImage() async {
     image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {});
+  }
+
+  void uploadImage() async {
+    StorageReference storageReference = FirebaseStorage.instance.ref().child(Path.basename(image.path));
+    StorageUploadTask uploadTask = storageReference.putFile(image);
+    await uploadTask.onComplete;
+    foodWastePoste.imageURL = await storageReference.getDownloadURL();
   }
 
   Widget photoSelectionScaffoldBody(File image){
@@ -45,13 +59,23 @@ class _PhotoSelectionState extends State<PhotoSelection> {
             Padding(padding: const EdgeInsets.all(10)),
             Form(
               key: formKey,
-              child: TextField(
+              child: TextFormField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  if (value.isEmpty){
+                    return 'Field cannot be empty';
+                  } else return null;
+                },
+                onSaved: (value) {
+                  foodWastePoste.quantity = int.parse(value);
+                },
               ),
             ),
+            Padding(padding: const EdgeInsets.all(10)),
             Stack(
               children: <Widget>[
                 Container(
@@ -67,7 +91,18 @@ class _PhotoSelectionState extends State<PhotoSelection> {
                       size: .2 * MediaQuery.of(context).size.height,
                       color: Colors.black,
                     ),
-                    onPressed: (){},
+                    onPressed: () async {
+                      if (formKey.currentState.validate()){
+                        formKey.currentState.save();
+                        await uploadImage();
+                        foodWastePoste.addDateToPost();
+                        Firestore.instance.collection('posts').add({
+                          'wasteAmount': foodWastePoste.quantity,
+                          'date': foodWastePoste.date,
+                          'imageURL': foodWastePoste.imageURL,
+                        });
+                      }
+                    },
                   )
                 ),
               ]
