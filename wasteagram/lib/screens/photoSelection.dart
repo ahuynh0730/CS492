@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 import 'package:path/path.dart' as Path;
 import '../models/foodWastePost.dart';
 
@@ -23,6 +24,7 @@ class _PhotoSelectionState extends State<PhotoSelection> {
   final formKey = GlobalKey<FormState>();
   File image;
   final foodWastePoste = FoodWastePoste();
+  LocationData locationData;
 
   void getImage() async {
     image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -34,6 +36,13 @@ class _PhotoSelectionState extends State<PhotoSelection> {
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
     foodWastePoste.imageURL = await storageReference.getDownloadURL();
+  }
+
+  void retrieveLocation() async {
+    var locationService = Location();
+    locationData = await locationService.getLocation();
+    foodWastePoste.latitude = locationData.latitude;
+    foodWastePoste.longitude = locationData.longitude;
   }
 
   Widget photoSelectionScaffoldBody(File image){
@@ -95,12 +104,16 @@ class _PhotoSelectionState extends State<PhotoSelection> {
                       if (formKey.currentState.validate()){
                         formKey.currentState.save();
                         await uploadImage();
+                        await retrieveLocation();
                         foodWastePoste.addDateToPost();
                         Firestore.instance.collection('posts').add({
                           'wasteAmount': foodWastePoste.quantity,
                           'date': foodWastePoste.date,
                           'imageURL': foodWastePoste.imageURL,
+                          'latitude': foodWastePoste.latitude,
+                          'longitude': foodWastePoste.longitude
                         });
+                        Navigator.of(context).pop();
                       }
                     },
                   )
